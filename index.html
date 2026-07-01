@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My App</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+body{
+    margin:0;
+    background:#0f172a;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial,sans-serif;
+}
+button{
+    background:#3390ec;
+    color:white;
+    border:none;
+    border-radius:12px;
+    padding:18px 40px;
+    font-size:22px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<button onclick="hello()">Привет</button>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+function hello(){
+    alert("👋 Привет!");
+}
+</script>
+
+</body>
+</html>
