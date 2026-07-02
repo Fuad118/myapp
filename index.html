@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fortune Wheel</title>
+<title>Wheel of Fortune</title>
 
 <style>
 body{
@@ -16,18 +16,35 @@ justify-content:center;
 align-items:center;
 height:100vh;
 flex-direction:column;
+overflow:hidden;
 }
 
 h1{
 margin-bottom:20px;
 }
 
-.wheel-wrapper{
+/* WRAPPER */
+.wheel-box{
 position:relative;
-width:320px;
-height:320px;
+width:340px;
+height:340px;
 }
 
+/* POINTER */
+.pointer{
+position:absolute;
+top:-18px;
+left:50%;
+transform:translateX(-50%);
+width:0;
+height:0;
+border-left:16px solid transparent;
+border-right:16px solid transparent;
+border-bottom:28px solid #ff3b3b;
+z-index:10;
+}
+
+/* WHEEL */
 .wheel{
 width:100%;
 height:100%;
@@ -43,34 +60,42 @@ background:conic-gradient(
 #4dfff6 270deg 315deg,
 #ff4da6 315deg 360deg
 );
-transition: transform 4s cubic-bezier(.17,.67,.12,.99);
+transition: transform 4s cubic-bezier(.12,.67,.18,1);
 }
 
-.pointer{
-position:absolute;
-top:-15px;
-left:50%;
-transform:translateX(-50%);
-width:0;
-height:0;
-border-left:15px solid transparent;
-border-right:15px solid transparent;
-border-bottom:30px solid red;
-}
-
+/* BUTTON */
 button{
-margin-top:30px;
-padding:12px 25px;
+margin-top:25px;
+padding:12px 26px;
 font-size:18px;
 border:none;
-border-radius:10px;
+border-radius:12px;
 background:#5ec7ff;
 cursor:pointer;
+font-weight:bold;
 }
 
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+/* RESULT */
 .result{
-margin-top:20px;
+margin-top:15px;
 font-size:20px;
+min-height:25px;
+}
+
+/* DARK OVERLAY */
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+display:none;
 }
 </style>
 </head>
@@ -79,24 +104,27 @@ font-size:20px;
 
 <h1>🎡 Fortune Wheel</h1>
 
-<div class="wheel-wrapper">
+<div class="wheel-box">
 
 <div class="pointer"></div>
 <div id="wheel" class="wheel"></div>
 
 </div>
 
-<button onclick="spin()">КРУТИТЬ</button>
+<button id="spinBtn" onclick="spin()">КРУТИТЬ</button>
 
 <div id="result" class="result"></div>
 
+<div id="overlay" class="overlay"></div>
+
 <script>
-let wheel = document.getElementById("wheel");
-let result = document.getElementById("result");
+const wheel = document.getElementById("wheel");
+const btn = document.getElementById("spinBtn");
+const result = document.getElementById("result");
+const overlay = document.getElementById("overlay");
 
-let currentRotation = 0;
+let rotation = 0;
 
-// призы (по секторам)
 const prizes = [
 "1000 монет",
 "500 монет",
@@ -110,24 +138,26 @@ const prizes = [
 
 function spin(){
 
-let randomIndex = Math.floor(Math.random() * prizes.length);
+btn.disabled = true;
+overlay.style.display = "block";
+result.innerHTML = "";
 
-// угол сектора
-let sectorAngle = 360 / prizes.length;
+let index = Math.floor(Math.random() * prizes.length);
+let sector = 360 / prizes.length;
 
 // цель остановки
-let stopAngle = (360 - (randomIndex * sectorAngle)) - (sectorAngle / 2);
+let stop = (360 - index * sector) - sector/2;
 
-// добавляем обороты + цель
-let spins = 5 * 360;
+// добавляем обороты
+rotation += 5 * 360 + stop;
 
-currentRotation += spins + stopAngle;
+wheel.style.transform = `rotate(${rotation}deg)`;
 
-wheel.style.transform = `rotate(${currentRotation}deg)`;
-
-// показываем результат
+// результат
 setTimeout(()=>{
-result.innerHTML = "Вы выиграли: " + prizes[randomIndex];
+result.innerHTML = "🎉 Вы выиграли: " + prizes[index];
+btn.disabled = false;
+overlay.style.display = "none";
 }, 4200);
 }
 </script>
