@@ -3,41 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My App</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<title>Game UI</title>
 <style>
-body{
-    margin:0;
-    background:#0f172a;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
-    font-family:Arial,sans-serif;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
-button{
-    background:#3390ec;
-    color:white;
-    border:none;
-    border-radius:12px;
-    padding:18px 40px;
-    font-size:22px;
-    cursor:pointer;
+
+body{
+background:#0e1621;
+color:white;
+display:flex;
+justify-content:center;
+}
+
+.container{
+width:100%;
+max-width:430px;
+padding:20px;
+}
+
+.logo{
+text-align:center;
+font-size:32px;
+margin-top:20px;
+margin-bottom:25px;
+}
+
+.balance{
+background:#1b2735;
+padding:18px;
+border-radius:16px;
+text-align:center;
+font-size:28px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.start{
+width:100%;
+padding:18px;
+font-size:22px;
+border:none;
+border-radius:16px;
+background:#2ea6ff;
+color:white;
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.card{
+background:#1b2735;
+border-radius:14px;
+padding:20px;
+text-align:center;
+font-size:18px;
+}
+
+.footer{
+margin-top:25px;
+display:flex;
+justify-content:space-around;
+font-size:15px;
+color:#9aa4af;
+}
+
+.item{
+text-align:center;
 }
 </style>
 </head>
+
 <body>
 
-<button onclick="hello()">Привет</button>
+<div class="container">
 
-<script>
-const tg = window.Telegram.WebApp;
-tg.expand();
+<div class="logo">🎮 GAME</div>
 
-function hello(){
-    alert("👋 Привет!");
-}
-</script>
+<div class="balance">
+1000 Coins
+</div>
+
+<button class="start">
+▶ START THE GAME
+</button>
+
+<div class="grid">
+
+<div class="card">👤<br>Профиль</div>
+
+<div class="card">🎁<br>Подарок</div>
+
+<div class="card">🏆<br>Рейтинг</div>
+
+<div class="card">🛒<br>Магазин</div>
+
+<div class="card">⚙️<br>Настройки</div>
+
+<div class="card">ℹ️<br>Информация</div>
+
+</div>
+
+<div class="footer">
+
+<div class="item">🏠<br>Главная</div>
+
+<div class="item">🎮<br>Игра</div>
+
+<div class="item">👤<br>Аккаунт</div>
+
+</div>
+
+</div>
 
 </body>
 </html>
