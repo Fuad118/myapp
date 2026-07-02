@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Game UI</title>
+
 <style>
 *{
 margin:0;
@@ -13,101 +14,146 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#0e1621;
+background:#0f172a;
 color:white;
-display:flex;
-justify-content:center;
-}
-
-.container{
-width:100%;
-max-width:430px;
 padding:20px;
 }
 
-.logo{
-text-align:center;
-font-size:32px;
-margin-top:20px;
+.main{
+background:#1e293b;
+border-radius:25px;
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+height:320px;
 margin-bottom:25px;
 }
 
-.balance{
-background:#1b2735;
-padding:18px;
-border-radius:16px;
-text-align:center;
-font-size:28px;
-font-weight:bold;
-margin-bottom:20px;
+.left{
+width:45%;
 }
 
-.start{
-width:100%;
-padding:18px;
-font-size:22px;
-border:none;
-border-radius:16px;
-background:#2ea6ff;
-color:white;
-margin-bottom:20px;
+.left h1{
+font-size:40px;
+margin-bottom:15px;
 }
 
-.grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-}
-
-.card{
-background:#1b2735;
-border-radius:14px;
-padding:20px;
-text-align:center;
+.left p{
 font-size:18px;
+color:#bfc8d4;
+margin-bottom:20px;
 }
 
-.footer{
-margin-top:25px;
+.spin{
+background:#3390ec;
+border:none;
+border-radius:15px;
+padding:15px 35px;
+font-size:20px;
+color:white;
+}
+
+.right{
+width:55%;
 display:flex;
-justify-content:space-around;
-font-size:15px;
-color:#9aa4af;
+justify-content:center;
+align-items:center;
 }
 
-.item{
-text-align:center;
+.wheel{
+width:220px;
+height:220px;
+border-radius:50%;
+background:
+conic-gradient(
+#ff4d4d 0deg 45deg,
+#ffd43b 45deg 90deg,
+#51cf66 90deg 135deg,
+#4dabf7 135deg 180deg,
+#845ef7 180deg 225deg,
+#ff922b 225deg 270deg,
+#20c997 270deg 315deg,
+#f06595 315deg 360deg
+);
+border:10px solid gold;
+box-shadow:0 0 25px gold;
+animation:rotateWheel 10s linear infinite;
+}
+
+@keyframes rotateWheel{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+.menu{
+display:flex;
+gap:20px;
+}
+
+.button{
+flex:1;
+height:140px;
+background:#1e293b;
+border-radius:25px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+font-size:32px;
+font-weight:bold;
+}
+
+.button span{
+font-size:20px;
+margin-top:10px;
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
+<div class="main">
 
-<div class="logo">🎮 GAME</div>
+<div class="left">
 
-<div class="balance">
-1000 Coins
+<h1>🎡 КОЛЕСО</h1>
+
+<p>Испытай удачу и получай награды.</p>
+
+<button class="spin">КРУТИТЬ</button>
+
 </div>
 
-<button class="start">
-▶ START THE GAME
-</button>
+<div class="right">
 
-<div class="grid">
+<div class="wheel"></div>
 
-<div class="card">👤<br>Профиль</div>
+</div>
 
-<div class="card">🎁<br>Подарок</div>
+</div>
 
-<div class="card">🏆<br>Рейтинг</div>
+<div class="menu">
 
-<div class="card">🛒<br>Магазин</div>
+<div class="button">
+🎡
+<span>Колесо</span>
+</div>
 
-<div class="card">⚙️<br>Настройки</div>
+<div class="button">
+👤
+<span>Профиль</span>
+</div>
 
-<div class="card">ℹ️<br>Информация</div>
+</div>
+
+</body>
+</html><div class="card">ℹ️<br>Информация</div>
 
 </div>
 
