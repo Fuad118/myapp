@@ -2,10 +2,12 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game UI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Energy Wheel</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -14,160 +16,132 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#0f172a;
+background:#0d1320;
 color:white;
+overflow:hidden;
+}
+
+.page{
+width:100%;
+height:100vh;
+display:none;
 padding:20px;
 }
 
-.main{
-background:#1e293b;
-border-radius:25px;
-padding:20px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-height:320px;
+.active{
+display:block;
+}
+
+h1{
 margin-bottom:25px;
+font-size:34px;
 }
 
-.left{
-width:45%;
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:18px;
 }
 
-.left h1{
-font-size:40px;
-margin-bottom:15px;
-}
+.card{
 
-.left p{
-font-size:18px;
-color:#bfc8d4;
-margin-bottom:20px;
-}
+background:#1a2438;
 
-.spin{
-background:#3390ec;
-border:none;
-border-radius:15px;
-padding:15px 35px;
-font-size:20px;
-color:white;
-}
-
-.right{
-width:55%;
-display:flex;
-justify-content:center;
-align-items:center;
-}
-
-.wheel{
-width:220px;
-height:220px;
-border-radius:50%;
-background:
-conic-gradient(
-#ff4d4d 0deg 45deg,
-#ffd43b 45deg 90deg,
-#51cf66 90deg 135deg,
-#4dabf7 135deg 180deg,
-#845ef7 180deg 225deg,
-#ff922b 225deg 270deg,
-#20c997 270deg 315deg,
-#f06595 315deg 360deg
-);
-border:10px solid gold;
-box-shadow:0 0 25px gold;
-animation:rotateWheel 10s linear infinite;
-}
-
-@keyframes rotateWheel{
-from{
-transform:rotate(0deg);
-}
-to{
-transform:rotate(360deg);
-}
-}
-
-.menu{
-display:flex;
-gap:20px;
-}
-
-.button{
-flex:1;
-height:140px;
-background:#1e293b;
 border-radius:25px;
+
+height:230px;
+
 display:flex;
+
 flex-direction:column;
+
 justify-content:center;
+
 align-items:center;
-font-size:32px;
+
+font-size:24px;
+
 font-weight:bold;
+
+transition:.25s;
+
 }
 
-.button span{
-font-size:20px;
-margin-top:10px;
+.card:active{
+
+transform:scale(.96);
+
 }
-</style>
 
-</head>
+.preview{
 
-<body>
+width:120px;
+height:120px;
+border-radius:50%;
 
-<div class="main">
+background:
 
-<div class="left">
+conic-gradient(
 
-<h1>🎡 КОЛЕСО</h1>
+#5ec7ff 0 45deg,
+#8d5cff 45deg 90deg,
+#53e37b 90deg 135deg,
+#ffc74d 135deg 180deg,
+#ff6c6c 180deg 225deg,
+#45d3ff 225deg 270deg,
+#9a6bff 270deg 315deg,
+#53e37b 315deg 360deg
 
-<p>Испытай удачу и получай награды.</p>
+);
 
-<button class="spin">КРУТИТЬ</button>
+border:6px solid white;
 
-</div>
+margin-bottom:18px;
 
-<div class="right">
+animation:previewSpin 8s linear infinite;
 
-<div class="wheel"></div>
+}
 
-</div>
+@keyframes previewSpin{
 
-</div>
+from{
 
-<div class="menu">
+transform:rotate(0deg);
 
-<div class="button">
-🎡
-<span>Колесо</span>
-</div>
+}
 
-<div class="button">
-👤
-<span>Профиль</span>
-</div>
+to{
 
-</div>
+transform:rotate(360deg);
 
-</body>
-</html><div class="card">ℹ️<br>Информация</div>
+}
 
-</div>
+}
 
-<div class="footer">
+.profileIcon{
 
-<div class="item">🏠<br>Главная</div>
+font-size:90px;
 
-<div class="item">🎮<br>Игра</div>
+margin-bottom:18px;
 
-<div class="item">👤<br>Аккаунт</div>
+}
 
-</div>
+.back{
 
-</div>
+font-size:22px;
 
-</body>
-</html>
+margin-bottom:20px;
+
+}
+
+.wheelBox{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:30px;
+
+position:relative;
+
+}
