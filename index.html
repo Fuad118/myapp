@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Energy Wheel</title>
 
 <style>
-
 *{
 margin:0;
 padding:0;
@@ -44,45 +42,27 @@ gap:18px;
 }
 
 .card{
-
 background:#1a2438;
-
 border-radius:25px;
-
 height:230px;
-
 display:flex;
-
 flex-direction:column;
-
 justify-content:center;
-
 align-items:center;
-
 font-size:24px;
-
 font-weight:bold;
-
 transition:.25s;
-
 }
 
 .card:active{
-
 transform:scale(.96);
-
 }
 
 .preview{
-
 width:120px;
 height:120px;
 border-radius:50%;
-
-background:
-
-conic-gradient(
-
+background:conic-gradient(
 #5ec7ff 0 45deg,
 #8d5cff 45deg 90deg,
 #53e37b 90deg 135deg,
@@ -91,57 +71,51 @@ conic-gradient(
 #45d3ff 225deg 270deg,
 #9a6bff 270deg 315deg,
 #53e37b 315deg 360deg
-
 );
-
 border:6px solid white;
-
 margin-bottom:18px;
-
 animation:previewSpin 8s linear infinite;
-
 }
 
 @keyframes previewSpin{
-
-from{
-
-transform:rotate(0deg);
-
-}
-
-to{
-
-transform:rotate(360deg);
-
-}
-
-}
-
-.profileIcon{
-
-font-size:90px;
-
-margin-bottom:18px;
-
+from{transform:rotate(0deg);}
+to{transform:rotate(360deg);}
 }
 
 .back{
-
 font-size:22px;
-
 margin-bottom:20px;
-
 }
+</style>
 
-.wheelBox{
+</head>
 
-display:flex;
+<body>
 
-justify-content:center;
+<!-- ГЛАВНАЯ СТРАНИЦА (ВАЖНО: active) -->
+<div class="page active" id="home">
+  <h1>Energy Wheel</h1>
 
-margin-top:30px;
+  <div class="grid">
 
-position:relative;
+    <div class="card">
+      <div class="preview"></div>
+      Wheel
+    </div>
 
-}
+    <div class="card">
+      <div class="preview"></div>
+      Stats
+    </div>
+
+  </div>
+</div>
+
+<!-- ВТОРАЯ СТРАНИЦА -->
+<div class="page" id="profile">
+  <div class="back">← Back</div>
+  <div style="font-size:90px;">👤</div>
+</div>
+
+</body>
+</html>
