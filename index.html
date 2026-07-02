@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Wheel of Fortune</title>
+<title>Daily Wheel</title>
 
 <style>
 body{
@@ -12,39 +12,45 @@ font-family:Arial;
 background:#0d1320;
 color:white;
 display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
 flex-direction:column;
-overflow:hidden;
+align-items:center;
+justify-content:center;
+height:100vh;
 }
 
-h1{
-margin-bottom:20px;
+h1{ margin-bottom:10px; }
+
+.balance{
+font-size:18px;
+padding:8px 14px;
+background:#1a2438;
+border-radius:10px;
+margin-bottom:10px;
 }
 
-/* WRAPPER */
+.timer{
+margin-bottom:15px;
+color:#ffcc66;
+min-height:20px;
+}
+
 .wheel-box{
 position:relative;
-width:340px;
-height:340px;
+width:320px;
+height:320px;
 }
 
-/* POINTER */
 .pointer{
 position:absolute;
 top:-18px;
 left:50%;
 transform:translateX(-50%);
-width:0;
-height:0;
-border-left:16px solid transparent;
-border-right:16px solid transparent;
-border-bottom:28px solid #ff3b3b;
+border-left:14px solid transparent;
+border-right:14px solid transparent;
+border-bottom:26px solid red;
 z-index:10;
 }
 
-/* WHEEL */
 .wheel{
 width:100%;
 height:100%;
@@ -63,13 +69,12 @@ background:conic-gradient(
 transition: transform 4s cubic-bezier(.12,.67,.18,1);
 }
 
-/* BUTTON */
 button{
-margin-top:25px;
-padding:12px 26px;
+margin-top:20px;
+padding:12px 24px;
 font-size:18px;
 border:none;
-border-radius:12px;
+border-radius:10px;
 background:#5ec7ff;
 cursor:pointer;
 font-weight:bold;
@@ -80,86 +85,120 @@ opacity:.5;
 cursor:not-allowed;
 }
 
-/* RESULT */
 .result{
 margin-top:15px;
-font-size:20px;
+font-size:18px;
 min-height:25px;
 }
 
-/* DARK OVERLAY */
-.overlay{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-display:none;
-}
 </style>
 </head>
 
 <body>
 
-<h1>🎡 Fortune Wheel</h1>
+<h1>🎡 Daily Wheel</h1>
+
+<div class="balance">
+💰 Баланс: <span id="balance">0</span>
+</div>
+
+<div class="timer" id="timer"></div>
 
 <div class="wheel-box">
-
 <div class="pointer"></div>
 <div id="wheel" class="wheel"></div>
-
 </div>
 
 <button id="spinBtn" onclick="spin()">КРУТИТЬ</button>
 
-<div id="result" class="result"></div>
-
-<div id="overlay" class="overlay"></div>
+<div class="result" id="result"></div>
 
 <script>
+
 const wheel = document.getElementById("wheel");
 const btn = document.getElementById("spinBtn");
 const result = document.getElementById("result");
-const overlay = document.getElementById("overlay");
+const balanceEl = document.getElementById("balance");
+const timerEl = document.getElementById("timer");
 
 let rotation = 0;
 
-const prizes = [
-"1000 монет",
-"500 монет",
-"Ничего",
-"2x множитель",
-"250 монет",
-"Супер приз",
-"300 монет",
-"750 монет"
-];
+// баланс
+let balance = localStorage.getItem("balance");
+balance = balance ? parseInt(balance) : 0;
+balanceEl.innerText = balance;
+
+// награды
+const prizes = [1000,500,0,200,250,1500,300,750];
+
+// cooldown (24 часа)
+const COOLDOWN = 24 * 60 * 60 * 1000;
+
+function getLastSpin(){
+return parseInt(localStorage.getItem("lastSpin") || "0");
+}
+
+function setLastSpin(){
+localStorage.setItem("lastSpin", Date.now());
+}
+
+function canSpin(){
+return Date.now() - getLastSpin() >= COOLDOWN;
+}
+
+function updateTimer(){
+if(canSpin()){
+timerEl.innerText = "🎁 Бесплатный спин доступен!";
+btn.disabled = false;
+return;
+}
+
+let diff = COOLDOWN - (Date.now() - getLastSpin());
+
+let h = Math.floor(diff / (1000*60*60));
+let m = Math.floor((diff % (1000*60*60)) / (1000*60));
+let s = Math.floor((diff % (1000*60)) / 1000);
+
+timerEl.innerText = `⏳ Следующий спин через ${h}ч ${m}м ${s}с`;
+btn.disabled = true;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
 
 function spin(){
 
-btn.disabled = true;
-overlay.style.display = "block";
-result.innerHTML = "";
+if(!canSpin()) return;
 
-let index = Math.floor(Math.random() * prizes.length);
+btn.disabled = true;
+setLastSpin();
+
+let index = Math.floor(Math.random()*prizes.length);
 let sector = 360 / prizes.length;
 
-// цель остановки
-let stop = (360 - index * sector) - sector/2;
+let stop = (360 - index*sector) - sector/2;
 
-// добавляем обороты
-rotation += 5 * 360 + stop;
-
+rotation += 5*360 + stop;
 wheel.style.transform = `rotate(${rotation}deg)`;
 
-// результат
 setTimeout(()=>{
-result.innerHTML = "🎉 Вы выиграли: " + prizes[index];
-btn.disabled = false;
-overlay.style.display = "none";
+
+let win = prizes[index];
+
+if(win === 0){
+result.innerText = "❌ Ничего";
+} else {
+result.innerText = "🎉 +" + win + " монет";
+balance += win;
+localStorage.setItem("balance", balance);
+balanceEl.innerText = balance;
+}
+
+updateTimer();
+
 }, 4200);
 }
+
 </script>
 
 </body>
