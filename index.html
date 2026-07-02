@@ -19,6 +19,7 @@ color:white;
 overflow:hidden;
 }
 
+/* PAGE SYSTEM */
 .page{
 width:100%;
 height:100vh;
@@ -30,6 +31,7 @@ padding:20px;
 display:block;
 }
 
+/* HOME */
 h1{
 margin-bottom:25px;
 font-size:34px;
@@ -49,15 +51,17 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-font-size:24px;
+font-size:22px;
 font-weight:bold;
-transition:.25s;
+cursor:pointer;
+transition:.2s;
 }
 
 .card:active{
-transform:scale(.96);
+transform:scale(.95);
 }
 
+/* WHEEL */
 .preview{
 width:120px;
 height:120px;
@@ -73,49 +77,125 @@ background:conic-gradient(
 #53e37b 315deg 360deg
 );
 border:6px solid white;
-margin-bottom:18px;
-animation:previewSpin 8s linear infinite;
+margin-bottom:12px;
+animation:spin 8s linear infinite;
 }
 
-@keyframes previewSpin{
+@keyframes spin{
 from{transform:rotate(0deg);}
 to{transform:rotate(360deg);}
 }
 
+/* BIG WHEEL PAGE */
+.center{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100%;
+gap:25px;
+}
+
+.bigWheel{
+width:280px;
+height:280px;
+border-radius:50%;
+background:conic-gradient(
+#5ec7ff 0 45deg,
+#8d5cff 45deg 90deg,
+#53e37b 90deg 135deg,
+#ffc74d 135deg 180deg,
+#ff6c6c 180deg 225deg,
+#45d3ff 225deg 270deg,
+#9a6bff 270deg 315deg,
+#53e37b 315deg 360deg
+);
+border:10px solid white;
+}
+
+button{
+padding:12px 24px;
+font-size:18px;
+border:none;
+border-radius:12px;
+background:#5ec7ff;
+color:#000;
+font-weight:bold;
+cursor:pointer;
+}
+
 .back{
-font-size:22px;
-margin-bottom:20px;
+position:absolute;
+top:20px;
+left:20px;
+font-size:18px;
+cursor:pointer;
+opacity:.8;
 }
 </style>
-
 </head>
 
 <body>
 
-<!-- ГЛАВНАЯ СТРАНИЦА (ВАЖНО: active) -->
+<!-- HOME -->
 <div class="page active" id="home">
-  <h1>Energy Wheel</h1>
 
-  <div class="grid">
+<h1>Energy Wheel</h1>
 
-    <div class="card">
-      <div class="preview"></div>
-      Wheel
-    </div>
+<div class="grid">
 
-    <div class="card">
-      <div class="preview"></div>
-      Stats
-    </div>
-
+  <div class="card" onclick="openWheel()">
+    <div class="preview"></div>
+    Wheel 1
   </div>
+
+  <div class="card">
+    <div class="preview"></div>
+    Wheel 2
+  </div>
+
 </div>
 
-<!-- ВТОРАЯ СТРАНИЦА -->
-<div class="page" id="profile">
-  <div class="back">← Back</div>
-  <div style="font-size:90px;">👤</div>
 </div>
+
+<!-- WHEEL PAGE -->
+<div class="page" id="wheelPage">
+
+<div class="back" onclick="goHome()">← Back</div>
+
+<div class="center">
+
+  <div id="wheel" class="bigWheel"></div>
+
+  <button onclick="spin()">SPIN</button>
+
+</div>
+
+</div>
+
+<script>
+let rotation = 0;
+
+function openWheel(){
+document.getElementById("home").classList.remove("active");
+document.getElementById("wheelPage").classList.add("active");
+}
+
+function goHome(){
+document.getElementById("wheelPage").classList.remove("active");
+document.getElementById("home").classList.add("active");
+}
+
+function spin(){
+const wheel = document.getElementById("wheel");
+
+let random = Math.floor(Math.random() * 3600 + 720); 
+rotation += random;
+
+wheel.style.transition = "transform 3s ease-out";
+wheel.style.transform = `rotate(${rotation}deg)`;
+}
+</script>
 
 </body>
 </html>
